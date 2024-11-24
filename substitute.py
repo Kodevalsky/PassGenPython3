@@ -1,23 +1,20 @@
 from itertools import product
-from lists import subDict
-from lists import dummyCharacters
-from lists import numbersOnly
+from lists import subDict, dummyCharacters, numbersOnly
 
-#returns the cartesian product of all replaceable characters 
+# Returns the cartesian product of all replaceable characters 
 def fullSub(password):
 	letters = []
-	#place substitution sets into the letters array
+	# Place substitution sets into the letters array
 	for val in password:
-		if val in subDict.keys():
+		if val in subDict:
 			letters.append(subDict[val])
 		else:
 			letters.append(val)
-	# return list(product(*letters))
 	return [''.join(item) for item in product(*letters)]
 
-#returns a list of possible passwords by replacing the first letter with common substitutions and appending numbers and letters to the end.  If numbers flag is set then append numbers to end
+# Returns a list of possible passwords by replacing the first letter with common substitutions and appending numbers and letters to the end. If numbers flag is set then append numbers to end
 def basicSub(password, numbers=False):
-	numCombos = [''.join(p) for n in range(1,5) for p in product(numbersOnly, repeat=n)]
+	numCombos = [''.join(p) for n in range(1, 5) for p in product(numbersOnly, repeat=n)]
 	characterList = numCombos if numbers else dummyCharacters
 	passwords = []
 	middle = password[1:]
@@ -26,6 +23,6 @@ def basicSub(password, numbers=False):
 		passwords.append(val[0] + middle + val[1])
 	return passwords
 
-#same as basic substitution, but appends 0-9999 to the end 
+# Same as basic substitution, but appends 0-9999 to the end 
 def appendNumbers(password):
 	return basicSub(password, True)
